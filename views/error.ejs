@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    h4 {
+      color: #253858;
+      margin-bottom: .8rem;
+      position: relative;
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.5rem;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      display: block;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      color: rgb(113, 120, 126);
+      font-family: 'Lato', sans-serif;
+    }
+    .btn-primary:hover {
+      color: #fff;
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+    .btn-primary {
+      color: #fff;
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+    .btn-round {
+      border-radius: 30px !important;
+      text-decoration: none;
+    }
+    .btn {
+      font-size: 15px;
+      font-weight: 600;
+      padding: 9px 25px;
+      border-width: 2px;
+      box-shadow: 0 3px 8px 0 rgba(41,49,89,.15), inset 0 0 0 1px hsla(0,0%,100%,.1);
+    }
+    .error-content {
+      padding: 0 0 70px;
+    }
+    .error-text {
+      text-align: center;
+    }
+    .error {
+      font-size: 180px;
+      font-weight: 100;
+    }
+    @keyframes bob {
+      0% { top: 0; }
+      50% { top: 0.2em; }
+    }
+    .im-sheep {
+      display: inline-block;
+      position: relative;
+      font-size: 1em;
+      margin-bottom: 70px;
+    }
+    /* Animation styles for the sheep here... */
+  </style>
+  <title><%= title %></title>
+</head>
+<body>
+  <div class="error-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 ">
+          <div class="error-text">
+            <h3 class="error">404 Error</h3>
+            <div class="im-sheep">
+              <div class="top">
+                <div class="body"></div>
+                <div class="head">
+                  <div class="im-eye one"></div>
+                  <div class="im-eye two"></div>
+                  <div class="im-ear one"></div>
+                  <div class="im-ear two"></div>
+                </div>
+              </div>
+              <div class="im-legs">
+                <div class="im-leg"></div>
+                <div class="im-leg"></div>
+                <div class="im-leg"></div>
+                <div class="im-leg"></div>
+              </div>
+            </div>
+            <h4><%= title %></h4>
+            <p><%= message || 'Page not found' %></p>
+            <a href="/" class="btn btn-primary btn-round">Quay lại trang chủ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
