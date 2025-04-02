@@ -1,7 +1,7 @@
 // Check if user is authenticated
 function ensureAuthenticated(req, res, next) {
     // Add a check to prevent redirect loops
-    if (req.path === '/login') {
+    if (req.path === '/login' || req.path === '/register') {
         return next();
     }
 
@@ -18,14 +18,11 @@ function ensureAuthenticated(req, res, next) {
 // Redirect if already authenticated
 function forwardAuthenticated(req, res, next) {
     // Add a check to prevent redirect loops
-    if (req.path === '/' || req.path.startsWith('/download')) {
-        return next();
+    if ((req.path === '/login' || req.path === '/register') && req.session && req.session.user) {
+        return res.redirect('/');
     }
-
-    if (!req.session || !req.session.user) {
-        return next();
-    }
-    res.redirect('/');
+    
+    next();
 }
 
 module.exports = {

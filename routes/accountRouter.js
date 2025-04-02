@@ -98,11 +98,9 @@ router.post('/login', forwardAuthenticated, csrfProtection, async (req, res) => 
     const { email, password } = req.body;
 
     try {
-        // Check if it's an email or username login
         const isEmail = email.includes('@');
         const field = isEmail ? 'email' : 'username';
 
-        // Find user - modified to check either email or username
         db.query(`SELECT * FROM users WHERE ${field} = ?`, [email], async (err, results) => {
             if (err) {
                 console.error("Database query error:", err);
@@ -117,7 +115,6 @@ router.post('/login', forwardAuthenticated, csrfProtection, async (req, res) => 
 
             const user = results[0];
 
-            // Compare password with password_hash field
             const isMatch = await bcrypt.compare(password, user.password_hash);
 
             if (!isMatch) {
@@ -125,14 +122,22 @@ router.post('/login', forwardAuthenticated, csrfProtection, async (req, res) => 
                 return res.redirect('/login');
             }
 
-            // Set session
-            req.session.user = {
-                id: user.id,
-                name: user.username, // Using username instead of name
-                email: user.email
-            };
+            // Regenerate session to prevent session fixation
+            req.session.regenerate((err) => {
+                if (err) {
+                    console.error('Session regeneration error:', err);
+                    return res.redirect('/login');
+                }
 
-            res.redirect('/');
+                // Set session
+                req.session.user = {
+                    id: user.id,
+                    name: user.username,
+                    email: user.email
+                };
+
+                res.redirect('/');
+            });
         });
     } catch (error) {
         console.error("Server error during login:", error);
