@@ -122,21 +122,28 @@ router.post('/login', forwardAuthenticated, csrfProtection, async (req, res) => 
                 return res.redirect('/login');
             }
 
-            // Regenerate session to prevent session fixation
-            req.session.regenerate((err) => {
-                if (err) {
-                    console.error('Session regeneration error:', err);
-                    return res.redirect('/login');
+            // Destroy existing session and create a new one
+            req.session.destroy((destroyErr) => {
+                if (destroyErr) {
+                    console.error('Session destroy error:', destroyErr);
                 }
 
-                // Set session
-                req.session.user = {
-                    id: user.id,
-                    name: user.username,
-                    email: user.email
-                };
+                // Regenerate session
+                req.session.regenerate((regenerateErr) => {
+                    if (regenerateErr) {
+                        console.error('Session regeneration error:', regenerateErr);
+                        return res.redirect('/login');
+                    }
 
-                res.redirect('/');
+                    // Set new session
+                    req.session.user = {
+                        id: user.id,
+                        name: user.username,
+                        email: user.email
+                    };
+
+                    res.redirect('/');
+                });
             });
         });
     } catch (error) {

@@ -98,30 +98,6 @@ app.use((err, req, res, next) => {
     next(err);
 });
 
-// In app.js, add a debug middleware
-app.use((req, res, next) => {
-    console.log(`Path: ${req.path}, User in session: ${req.session.user ? 'Yes' : 'No'}`);
-    next();
-});
-
-// In app.js, temporarily disable redirect checks
-app.use((req, res, next) => {
-    // Skip authentication for all routes temporarily
-    if (req.path === '/login' || req.path === '/register') {
-      return next();
-    }
-    
-    // Create a mock user session if none exists
-    if (!req.session.user) {
-      req.session.user = {
-        id: 1,
-        name: 'Debug User',
-        email: 'debug@example.com'
-      };
-    }
-    next();
-  });
-
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
